@@ -1,0 +1,98 @@
+# hier werden die verschiedenen Datensets erstellt
+
+import pandas as pd
+import os
+
+# Folge der ausgegebenen Anweisung (oben im Outputfenster, vor der ersten Fehlermeldung)
+print('Lege den Ordner "data" mit deinen Daten im folgenden Verzeichnis an: ', os.getcwd())
+# Erzeuge jetzt einen neuen Ordner mit dem Namen "data" in deinem Arbeitsverzeichnis und hinterlege alle deine Daten darin.
+
+# Im nächsten Schritt werden die Daten eingelesen
+londoncrime = pd.read_csv("data/london-street.csv")
+typegeoset = londoncrime[["Longitude", "Latitude", "Crime type"]]
+from sklearn.utils import shuffle       # Alle Daten werden hier randomisiert 
+typegeoset = shuffle(typegeoset)
+
+bicycleset = typegeoset.loc[typegeoset["Crime type"] == "Bicycle theft"]
+bicycleset = bicycleset[["Latitude", "Longitude"]]
+bicycleset = bicycleset.apply(pd.to_numeric, errors='coerce')
+bicycleset = bicycleset.dropna()
+bicycleset.to_csv("bicycletheft.csv")
+
+violencesexset = typegeoset.loc[typegeoset["Crime type"] == "Violence and sexual offences"]
+violencesexset = violencesexset[["Latitude", "Longitude"]]
+violencesexset = violencesexset.apply(pd.to_numeric, errors='coerce')
+violencesexset = violencesexset.dropna()
+violencesexset.to_csv("violencesexoffences.csv")
+
+antisocialset = typegeoset.loc[typegeoset["Crime type"] == "Anti-social behaviour"]
+antisocialset = antisocialset[["Latitude", "Longitude"]]
+antisocialset = antisocialset.apply(pd.to_numeric, errors='coerce')
+antisocialset = antisocialset.dropna()
+antisocialset.to_csv("antisocialbehaviour.csv")
+
+drugset = typegeoset.loc[typegeoset["Crime type"] == "Drugs"]
+drugset = drugset[["Latitude", "Longitude"]]
+drugset = drugset.apply(pd.to_numeric, errors='coerce')
+drugset = drugset.dropna()
+drugset.to_csv("drugs.csv")
+
+burglaryset = typegeoset.loc[typegeoset["Crime type"] == "Burglary"]
+burglaryset = burglaryset[["Latitude", "Longitude"]]
+burglaryset = burglaryset.apply(pd.to_numeric, errors='coerce')
+burglaryset = burglaryset.dropna()
+burglaryset.to_csv("burglary.csv")
+
+damagearsonset = typegeoset.loc[typegeoset["Crime type"] == "Criminal damage and arson"]
+damagearsonset = damagearsonset[["Latitude", "Longitude"]]
+damagearsonset = damagearsonset.apply(pd.to_numeric, errors='coerce')
+damagearsonset = damagearsonset.dropna()
+damagearsonset.to_csv("damageandarson.csv")
+
+robberyset = typegeoset.loc[typegeoset["Crime type"] == "Robbery"]
+robberyset = robberyset[["Latitude", "Longitude"]]
+robberyset = robberyset.apply(pd.to_numeric, errors='coerce')
+robberyset = robberyset.dropna()
+robberyset.to_csv("robbery.csv")
+
+shopliftingset = typegeoset.loc[typegeoset["Crime type"] == "Shoplifting"]
+shopliftingset = shopliftingset[["Latitude", "Longitude"]]
+shopliftingset = shopliftingset.apply(pd.to_numeric, errors='coerce')
+shopliftingset = shopliftingset.dropna()
+shopliftingset.to_csv("shoplifting.csv")
+
+publicorderset = typegeoset.loc[typegeoset["Crime type"] == "Public order"]
+publicorderset = publicorderset[["Latitude", "Longitude"]]
+publicorderset = publicorderset.apply(pd.to_numeric, errors='coerce')
+publicorderset = publicorderset.dropna()
+publicorderset.to_csv("publicorder.csv")
+
+othertheftset = typegeoset.loc[typegeoset["Crime type"] == "Other theft"]
+othertheftset = othertheftset[["Latitude", "Longitude"]]
+othertheftset = othertheftset.apply(pd.to_numeric, errors='coerce')
+othertheftset = othertheftset.dropna()
+othertheftset.to_csv("othertheft.csv")
+
+theftfrompersonset = typegeoset.loc[typegeoset["Crime type"] == "Theft from the person"]
+theftfrompersonset = theftfrompersonset[["Latitude", "Longitude"]]
+theftfrompersonset = theftfrompersonset.apply(pd.to_numeric, errors='coerce')
+theftfrompersonset = theftfrompersonset.dropna()
+theftfrompersonset.to_csv("theftfromperson.csv")
+
+weaponsset = typegeoset.loc[typegeoset["Crime type"] == "Possession of weapons"]
+weaponsset = weaponsset[["Latitude", "Longitude"]]
+weaponsset = weaponsset.apply(pd.to_numeric, errors='coerce')
+weaponsset = weaponsset.dropna()
+weaponsset.to_csv("posessionofweapons.csv")
+
+vehicleset = typegeoset.loc[typegeoset["Crime type"] == "Vehicle crime"]
+vehicleset = vehicleset[["Latitude", "Longitude"]]
+vehicleset = vehicleset.apply(pd.to_numeric, errors='coerce')
+vehicleset = vehicleset.dropna()
+vehicleset.to_csv("vehiclecrime.csv")
+
+crime = typegeoset.loc[typegeoset["Crime type"] == "Other crime"]
+crime = crime[["Latitude", "Longitude"]]
+crime = crime.apply(pd.to_numeric, errors='coerce')
+crime = crime.dropna()
+crime.to_csv("othercrime.csv")

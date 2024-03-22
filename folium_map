@@ -1,0 +1,27 @@
+import pandas as pd
+londoncrime = pd.read_csv("/Users/AstridundBernd/Downloads/london-police-records/london-street.csv")
+lcgeo = londoncrime[["Longitude","Latitude"]]
+lcgeo = lcgeo.apply(pd.to_numeric, errors='coerce')
+lcgeo = lcgeo.dropna()
+lcgeo.to_csv("lcgeo.csv")
+#lcgeo.Longitude = lcgeo.Longitude.replace(["\-"],[""])
+
+lcgeo_flt = pd.read_csv("/Users/AstridundBernd/lcgeo.csv")
+#print(lcgeo_flt.dtypes)
+#print(lcgeo.head())
+
+lcgeo_flt_reduced = lcgeo_flt[['Latitude', 'Longitude']]
+
+list = lcgeo_flt_reduced.values.tolist()
+
+
+import folium
+from folium import plugins
+from folium.plugins import HeatMap
+
+
+#locations = gmaps.datasets.load_dataset("data")
+map = folium.Map(location =[51.5074,0.1278],
+                zoom_start = 13)
+HeatMap(lcgeo_flt_reduced[:10000]).add_to(map)
+map

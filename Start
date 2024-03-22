@@ -1,0 +1,27 @@
+import pandas as pd
+londoncrime = pd.read_csv("/Users/tobiasvolkel/Downloads/london-police-records/london-street.csv")
+lcgeo = londoncrime[["Longitude","Latitude"]]
+lcgeo = lcgeo.apply(pd.to_numeric, errors='coerce')
+lcgeo = lcgeo.dropna()
+lcgeo.to_csv("lcgeo.csv")
+#lcgeo.Longitude = lcgeo.Longitude.replace(["\-"],[""])
+
+lcgeo_flt = pd.read_csv("/Users/tobiasvolkel/Downloads/london-police-records/lcgeo.csv")
+#print(lcgeo_flt.dtypes)
+#print(lcgeo.head())
+
+lcgeo_flt_reduced = lcgeo_flt[['Latitude', 'Longitude']]
+
+list = lcgeo_flt_reduced.values.tolist()
+
+
+import gmaps
+import gmaps.datasets
+gmaps.configure(api_key="AI...") 
+
+
+#locations = gmaps.datasets.load_dataset("data")
+
+fig = gmaps.figure()
+fig.add_layer(gmaps.heatmap_layer(list[:1000000]))
+fig

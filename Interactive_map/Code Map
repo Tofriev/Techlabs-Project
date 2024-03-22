@@ -1,0 +1,70 @@
+import pandas as pd
+import geopandas as gpd
+import folium
+
+# Die Json Datei mit den Stadtteilgrenzen wird hier eingelesen, gekürzt und die Stadtteile, für die keine 
+# Daten vorliegen werden herausgenommen 
+fname = '/london_sport.json'
+boroughs = gpd.read_file(fname)
+boroughs = boroughs[["name", "geometry"]]
+boroughs = boroughs.drop([32,32], axis=0)
+boroughs = boroughs.drop([24,24], axis=0)
+boroughs = boroughs.drop([7,7], axis=0)
+boroughs = boroughs.drop([17,17], axis=0)
+boroughs = boroughs.drop([22,22], axis=0)
+
+# Der Datensatz mit den Straftaten wird geladen und mit der Json Datei verknüpft 
+crimes = pd.read_csv("/aggregateddf.csv")
+boroughcrimes = boroughs.merge(crimes, on="name")
+
+# Die Karte word definiert 
+mymap = folium.Map(location=[51.50939,-0.11832], zoom_start=12,tiles="Stamen Toner")
+folium.TileLayer('CartoDB positron',name="Light Map",control=False).add_to(mymap)
+
+# Die Scale, rechts oben auf der Karte wird erstellt und die gewünschten Quantile können eingegeben werden 
+myscale = (boroughcrimes['Incidents'].quantile((0,0.12,0.5,0.8,1))).tolist()
+
+# Die Karte wird hier erstellt und geladen 
+mymap.choropleth(
+ geo_data=boroughcrimes,
+ name='Choropleth',
+ data=boroughcrimes,
+ columns=['name','Incidents'],
+ key_on="feature.properties.name",
+ fill_color='YlOrBr',
+ threshold_scale=myscale,
+ fill_opacity=0.4,
+ line_opacity=0.2,
+ legend_name='Incidents',
+ smooth_factor=0
+)
+mymap
+
+# Hier wird alles nötige für die "Interaktivität" der Karte erstellt, also was passieren soll, wenn der Curser sich 
+# über dem entsprechenden Stadtteil befindet
+style = lambda x: {'fillColor': '#ffffff', 
+                            'color':'#000000', 
+                            'fillOpacity': 0.1, 
+                            'weight': 0.1}
+highlight = lambda x: {'fillColor': '#000000', 
+                                'color':'#000000', 
+                                'fillOpacity': 0.50, 
+                                'weight': 0.1}
+
+# Hier entsteht nun die "Interaktive" Karte, diese bildet lediglich einen "overlay" zu der vorher erstellten Karte
+NAME = folium.features.GeoJson(
+    boroughcrimes,
+    style_function=style, 
+    control=False,
+    highlight_function=highlight, 
+    tooltip=folium.features.GeoJsonTooltip(
+        fields=['name','Incidents'],
+        aliases=['borough ','number of crimes committed: '],
+        style=("background-color: white; color: #333333; font-family: arial; font-size: 12px; padding: 10px;") 
+    )
+)
+mymap.add_child(NAME)
+mymap.keep_in_front(NAME)
+folium.LayerControl().add_to(mymap)
+mymap
+# Fertig! :D

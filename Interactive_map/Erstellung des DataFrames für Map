@@ -1,0 +1,134 @@
+# Hier wurde aus dem Dataset die Anzahl der einzelnen Strafataten ausgelesen 
+import pandas as pd
+
+data = pd.read_csv("/london_crime_by_lsoa.csv") # Hier die Datei einlesen!
+data = data[["borough", "major_category"]]
+
+greenwich = data.loc[data["borough"] == "Greenwich"]
+greenwich = greenwich.shape[0]
+print("Greenwich: ", greenwich)
+
+croydon = data.loc[data["borough"] == "Croydon"]
+croydon = croydon.shape[0]
+print("Croydon: ", croydon)
+
+barnet = data.loc[data["borough"] == "Barnet"]
+barnet = barnet.shape[0]
+print("Barnet: ", barnet)
+
+bromley = data.loc[data["borough"] == "Bromley"]
+bromley = bromley.shape[0]
+print("Bromley: ", bromley)
+
+wandsworth = data.loc[data["borough"] == "Wandsworth"]
+wandsworth = wandsworth.shape[0]
+print("Wandsworth: ", wandsworth)
+
+redbridge = data.loc[data["borough"] == "Redbridge"]
+redbridge = redbridge.shape[0]
+print("Redbridge: ", redbridge)
+
+ealing = data.loc[data["borough"] == "Ealing"]
+ealing = ealing.shape[0]
+print("Ealing: ", ealing)
+
+hounslow = data.loc[data["borough"] == "Hounslow"]
+hounslow = hounslow.shape[0]
+print("Hounslow: ", hounslow)
+
+newham = data.loc[data["borough"] == "Newham"]
+newham = newham.shape[0]
+print("Newham: ", newham)
+
+sutton = data.loc[data["borough"] == "Sutton"]
+sutton = sutton.shape[0]
+print("Sutton: ", sutton)
+
+haringey = data.loc[data["borough"] == "Haringey"]
+haringey = haringey.shape[0]
+print("Haringey: ", haringey)
+
+lambeth = data.loc[data["borough"] == "Lambeth"]
+lambeth = lambeth.shape[0]
+print("Lambeth: ", lambeth)
+
+richmond = data.loc[data["borough"] == "Richmond upon Thames"]
+richmond = richmond.shape[0]
+print("Richmond upon Thames: ", richmond)
+
+hillingdon = data.loc[data["borough"] == "Hillingdon"]
+hillingdon = hillingdon.shape[0]
+print("Hillingdon: ", hillingdon)
+
+havering = data.loc[data["borough"] == "Havering"]
+havering = havering.shape[0]
+print("Havering: ", havering)
+
+kingston = data.loc[data["borough"] == "Kingston upon Thames"]
+kingston = kingston.shape[0]
+print("Kingston upon Thames: ", kingston)
+
+westminster = data.loc[data["borough"] == "Westminster"]
+westminster = westminster.shape[0]
+print("Westminster: ", westminster)
+
+hackney = data.loc[data["borough"] == "Hackney"]
+hackney = hackney.shape[0]
+print("Hackney: ", hackney)
+
+lewisham = data.loc[data["borough"] == "Lewisham"]
+lewisham = lewisham.shape[0]
+print("Lewisham: ", lewisham)
+
+brent = data.loc[data["borough"] == "Brent"]
+brent = brent.shape[0]
+print("Brent: ", brent)
+
+southwark = data.loc[data["borough"] == "Southwark"]
+southwark = southwark.shape[0]
+print("Southwark: ", southwark)
+
+waltham = data.loc[data["borough"] == "Waltham Forest"]
+waltham = waltham.shape[0]
+print("Waltham Forest: ", waltham)
+
+camden = data.loc[data["borough"] == "Camden"]
+camden = camden.shape[0]
+print("Camden: ", camden)
+
+bexley = data.loc[data["borough"] == "Bexley"]
+bexley = bexley.shape[0]
+print("Bexley: ", bexley)
+
+kensington = data.loc[data["borough"] == "Kensington and Chelsea"]
+kensington = kensington.shape[0]
+print("Kensington and Chelsea: ", kensington)
+
+islington = data.loc[data["borough"] == "Islington"]
+islington = islington.shape[0]
+print("Islington: ", islington)
+
+fulham = data.loc[data["borough"] == "Hammersmith and Fulham"]
+fulham = fulham.shape[0]
+print("Hammersmith and Fulham: ", fulham)
+
+hamlets = data.loc[data["borough"] == "Tower Hamlets"]
+hamlets = hamlets.shape[0]
+print("Tower Hamlets: ", hamlets)
+
+# Für diese Stadtteile liegen leider keine Daten vor
+#City of london
+#Merton
+#Harrow
+#Enfield
+#barking and dagenham
+
+# und Hier wird ein DataFrame mit Pandas erstellt, der dann später für die Map genutzt wird.
+aggdata = {"name": ["Greenwich", "Croydon", "Barnet", "Bromley", "Wandsworth", "Redbridge", "Ealing", "Hounslow",
+                "Newham", "Sutton", "Haringey", "Lambeth", "Richmond upon Thames", "Hillingdon", "Havering", "Kingston upon Thames",
+                "Westminster", "Hackney", "Lewisham", "Brent", "Southwark", "Waltham Forest", "Camden", "Bexley",
+                "Kensington and Chealsea", "Islington", "Hammersmith and Fulham", "Tower Hamlets"],
+                        "Incidents": [421200, 602100, 572832, 523908, 498636, 445716, 549396, 395928, 471420, 322488, 413856, 519048, 304128, 442584, 399600, 259524, 366660, 417744, 485136,
+                                      490644, 482200, 406296, 378432, 385588, 296784, 359208, 328752, 412128]}
+aggdatadf = pd.DataFrame(aggdata)
+aggdatadf.to_csv("aggregateddf.csv")
